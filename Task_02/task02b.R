@@ -53,3 +53,16 @@ Question 2: the data is impossible to interpret because of multiple data points 
 source("http://jonsmitchell.com/code/plotFxn02b.R")
 pdf("r02b-cumulativeMilkByTime.pdf", height = 4, width = 4)
 dev.off()
+Naps <- which(beren3$event == "nap")
+beren4 <- beren3[Naps,]
+startID <- apply(beren4, 1, function(x) paste(x[5:6], collapse = '-'))
+starttimeID <- sapply(startID, as.difftime, format = "%H-%M")
+stopID <- apply(beren4, 1, function(x) paste(x[7:8], collapse = '-'))
+stoptimeID <- sapply(stopID, as.difftime, format = "%H-%M")
+NapLength <- stoptimeID - starttimeID
+NapPerDay <- tapply(NapLength, beren4$day, sum)
+NapPerDay
+plot(as.numeric(names(NapPerDay)), NapPerDay, type="b", pch=16, xlab = "day", ylab = "total time slept (hours)")
+cro(starttimeID, NapLength)
+cor.test(starttimeID, NapLength)
+correlation: there is a negative correlation between the nap start time and duration of the nap. 
