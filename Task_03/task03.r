@@ -70,3 +70,9 @@ abline(Line)
 Line2 <- lm(tExt~Samples +0)
 abline(Line2)
 #the line becomes further from the points that are above the line. This means that the line fits the data for the lower sample numbers but it doesnt fit well for the larger samples.
+# extra credit
+abline(mod <- lm(Line2))
+coef(mod)
+fit.lm <- lm(mod)
+slope <- coef(fit.lm)
+# the slope is the same fpr the new line
